@@ -1,0 +1,427 @@
+
+{
+  "security": [
+  {
+    "bearerAuth": []
+  }
+],
+
+
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Telecontrol",
+    "version": "1.0.0",
+    "description": "API com CRUD para Produtos, Ordens de Serviço e Clientes"
+  },
+  "tags": [
+    {
+      "name": "Produtos",
+      "description": "Operações relacionadas a produtos"
+    },
+    {
+      "name": "Ordens de Serviço",
+      "description": "Operações relacionadas a ordens de serviço"
+    },
+    {
+      "name": "Clientes",
+      "description": "Operações relacionadas a clientes"
+    }
+  ],
+  "paths": {
+    "/telecontrol/app/products": {
+      "get": {
+        "tags": ["Produtos"],
+        "summary": "Lista todos os produtos",
+        "responses": {
+          "200": {
+            "description": "Lista de produtos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Product" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Produtos"],
+        "summary": "Cria um novo produto",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ProductInput" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Produto criado" }
+        }
+      },
+      "put": {
+        "tags": ["Produtos"],
+        "summary": "Atualiza um produto",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ProductInput" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Produto atualizado" },
+          "404": { "description": "Produto não encontrado" }
+        }
+      },
+      "delete": {
+        "tags": ["Produtos"],
+        "summary": "Exclui um produto",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }],
+        "responses": {
+          "204": { "description": "Produto excluído" },
+          "404": { "description": "Produto não encontrado" }
+        }
+      }
+    },
+     "/telecontrol/app/products/find/{id}" : {
+      "get": {
+        "tags": ["Produtos"],
+        "summary": "Lista Produtos por ID",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }],
+        "responses": {
+          "200": {
+            "description": "Lista de produtos por id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Product" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "telecontrol/app/orders": {
+      "get": {
+        "tags": ["Ordens de Serviço"],
+        "summary": "Lista todas as ordens de serviço",
+        "responses": {
+          "200": {
+            "description": "Lista de ordens de serviço",
+            "content": {
+              "application/json": {
+                 "example": [
+                  {
+                    "id": 4,
+                    "product_id": 5,
+                    "open_date": "2025-06-02",
+                    "consumer_name": "Renato Nunes Pineda",
+                    "consumer_cpf": "404.712.788-40"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Ordens de Serviço"],
+        "summary": "Cria uma nova ordem de serviço",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+                "example": [
+                  {
+                    "product_id": 5,
+                    "consumer_name": "Renato Nunes Pineda",
+                    "consumer_cpf": "404.712.788-40"
+                  }
+                ]
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Ordem de serviço criada" }
+        }
+      },
+      "put": {
+        "tags": ["Ordens de Serviço"],
+        "summary": "Atualiza uma ordem de serviço",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": [
+                  {
+                    "product_id": 5,
+                    "consumer_name": "Renato Nunes Pineda",
+                    "consumer_cpf": "404.712.788-40"
+                  }
+                ]
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Ordem de serviço atualizada" },
+          "404": { "description": "Ordem de serviço não encontrada" }
+        }
+      },
+      "delete": {
+        "tags": ["Ordens de Serviço"],
+        "summary": "Exclui uma ordem de serviço",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }],
+        "responses": {
+          "204": { "description": "Ordem de serviço excluída" },
+          "404": { "description": "Ordem de serviço não encontrada" }
+        }
+      }
+    },
+
+    "/telecontrol/app/orders/find/{id}": {
+      "get": {
+        "tags": ["Ordens de Serviço"],
+        "summary": "Busca ordem de serviço por ID",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }],
+        "responses": {
+          "200": {
+            "description": "Ordem de serviço encontrada",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 4,
+                    "open_date": "2025-06-02",
+                    "consumer_name": "Renato Nunes Pineda",
+                    "consumer_cpf": "404.712.788-40",
+                    "product_id": 5
+                  }
+                ]
+              }
+            }
+          },
+          "404": { "description": "Ordem de serviço não encontrada" }
+        }
+      }
+    },
+
+    "/clients": {
+      "get": {
+        "tags": ["Clientes"],
+        "summary": "Lista todos os clientes",
+        "responses": {
+          "200": {
+            "description": "Lista de clientes",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 5,
+                    "name": "Renato Nunes Pineda",
+                    "cpf": "404.712.788-40",
+                    "address": "Rua das Laranjeiras, 110 Marilia SP"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Clientes"],
+        "summary": "Cria um novo cliente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+               "example": [
+                  {
+                    "name": "Renato Nunes Pineda",
+                    "cpf": "404.712.788-40",
+                    "address": "Rua das Laranjeiras, 110 Marilia SP"
+                  }
+                ]
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Cliente criado" }
+        }
+      },
+      "put": {
+        "tags": ["Clientes"],
+        "summary": "Atualiza um cliente",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": [
+                  {
+                    "name": "Renato Nunes Pineda",
+                    "cpf": "404.712.788-40",
+                    "address": "Rua das Laranjeiras, 110 Marilia SP"
+                  }
+                ]
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Cliente atualizado" },
+          "404": { "description": "Cliente não encontrado" }
+        }
+      },
+      "delete": {
+        "tags": ["Clientes"],
+        "summary": "Exclui um cliente",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }],
+        "responses": {
+          "204": { "description": "Cliente excluído" },
+          "404": { "description": "Cliente não encontrado" }
+        }
+      }
+    },
+    "/telecontrol/app/clients/find/{id}": {
+      "get": {
+        "tags": ["Clientes"],
+        "summary": "Busca cliente por ID",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }],
+        "responses": {
+          "200": {
+            "description": "Cliente encontrado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Client" }
+              }
+            }
+          },
+          "404": { "description": "Cliente não encontrado" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "description": { "type": "string", "example": "TV" },
+          "status": { "type": "string", "example": "active" },
+          "warranty_time": { "type": "integer", "example": 12 }
+        },
+        "required": ["id", "description", "status", "warranty_time"]
+      },
+      "ProductInput": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" },
+          "status": { "type": "string" },
+          "warranty_time": { "type": "integer" }
+        },
+        "required": ["description", "status", "warranty_time"]
+      },
+
+      "ServiceOrder": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "product_id": { "type": "integer", "example": 1 },
+          "client_id": { "type": "integer", "example": 1 },
+          "description": { "type": "string", "example": "Conserto da TV" },
+          "status": { "type": "string", "example": "pending" }
+        },
+        "required": ["id", "product_id", "client_id", "description", "status"]
+      },
+      "ServiceOrderInput": {
+        "type": "object",
+        "properties": {
+          "product_id": { "type": "integer" },
+          "client_id": { "type": "integer" },
+          "description": { "type": "string" },
+          "status": { "type": "string" }
+        },
+        "required": ["product_id", "client_id", "description", "status"]
+      },
+
+      "Client": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "name": { "type": "string", "example": "João Silva" },
+          "cpf": { "type": "string", "example": "123.456.789-00" }
+        },
+        "required": ["id", "name", "cpf"]
+      },
+      "ClientInput": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "cpf": { "type": "string" }
+        },
+        "required": ["name", "cpf"]
+      }
+    }
+  }
+}
